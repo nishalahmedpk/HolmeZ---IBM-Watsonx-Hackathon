@@ -96,10 +96,10 @@ export default function Reports() {
   const hasData = reportData && reportData.summary && reportData.summary.totalOrders > 0;
 
   return (
-    <div className="min-h-screen p-4 sm:p-6 lg:p-8 space-y-6 animate-fade-in">
+    <div className="min-h-screen p-4 sm:p-6 lg:p-8 space-y-6 animate-fade-in bg-gradient-to-b from-background to-secondary/20">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gradient">Sales Analytics</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground">Sales Analytics</h1>
           <p className="text-muted-foreground mt-1">
             {reportData ? reportData.dateRange : "Loading..."}
           </p>
@@ -115,7 +115,6 @@ export default function Reports() {
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="bg-white/5 border-white/10"
               />
             </div>
             <div className="space-y-2">
@@ -124,7 +123,6 @@ export default function Reports() {
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="bg-white/5 border-white/10"
               />
             </div>
           </div>
@@ -159,9 +157,9 @@ export default function Reports() {
       </div>
 
       {loading ? (
-        <div className="glass-card p-12 flex flex-col items-center justify-center min-h-[400px]">
+        <div className="glass-card p-12 flex flex-col items-center justify-center min-h-[400px] bg-white">
           <div className="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin mb-4" />
-          <p className="text-muted-foreground">Loading report data...</p>
+          <p className="text-muted-foreground font-medium">Loading report data...</p>
         </div>
       ) : !hasData ? (
         <NoData />
@@ -196,8 +194,8 @@ export default function Reports() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {reportData.data.monthlyTrend && reportData.data.monthlyTrend.length > 0 && (
-              <div className="glass-card p-6">
-                <h3 className="text-xl font-semibold mb-4">Monthly Sales Trend</h3>
+              <div className="glass-card p-6 bg-white">
+                <h3 className="text-xl font-semibold text-foreground mb-4">Monthly Sales Trend</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={reportData.data.monthlyTrend}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
@@ -219,8 +217,8 @@ export default function Reports() {
             )}
 
             {reportData.data.topCustomers && reportData.data.topCustomers.length > 0 && (
-              <div className="glass-card p-6">
-                <h3 className="text-xl font-semibold mb-4">Top Customers</h3>
+              <div className="glass-card p-6 bg-white">
+                <h3 className="text-xl font-semibold text-foreground mb-4">Top Customers</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={reportData.data.topCustomers.slice(0, 10)} layout="vertical">
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
@@ -240,8 +238,8 @@ export default function Reports() {
             )}
 
             {reportData.data.topProducts && reportData.data.topProducts.length > 0 && (
-              <div className="glass-card p-6">
-                <h3 className="text-xl font-semibold mb-4">Top Products</h3>
+              <div className="glass-card p-6 bg-white">
+                <h3 className="text-xl font-semibold text-foreground mb-4">Top Products</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={reportData.data.topProducts.slice(0, 10)}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
@@ -261,8 +259,8 @@ export default function Reports() {
             )}
 
             {reportData.data.deliveryStatus && reportData.data.deliveryStatus.length > 0 && (
-              <div className="glass-card p-6">
-                <h3 className="text-xl font-semibold mb-4">Delivery Status</h3>
+              <div className="glass-card p-6 bg-white">
+                <h3 className="text-xl font-semibold text-foreground mb-4">Delivery Status</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie

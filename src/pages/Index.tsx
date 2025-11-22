@@ -74,7 +74,7 @@ export default function Index() {
     <div className="min-h-screen flex items-center justify-center p-4 animate-fade-in">
       <div className="w-full max-w-2xl">
         <div className="glass-card p-8">
-          <h1 className="text-4xl font-bold text-gradient mb-2">Create New Order</h1>
+          <h1 className="text-4xl font-bold text-foreground mb-2">Create New Order</h1>
           <p className="text-muted-foreground mb-8">Fill in the details to place a new order</p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -90,7 +90,6 @@ export default function Index() {
                 onChange={handleChange}
                 placeholder="Enter customer or company name"
                 required
-                className="bg-white/5 border-white/10"
               />
             </div>
 
@@ -106,7 +105,6 @@ export default function Index() {
                 onChange={handleChange}
                 placeholder="Enter product name"
                 required
-                className="bg-white/5 border-white/10"
               />
             </div>
 
@@ -124,7 +122,6 @@ export default function Index() {
                 placeholder="Enter quantity"
                 min="1"
                 required
-                className="bg-white/5 border-white/10"
               />
             </div>
 
@@ -139,7 +136,6 @@ export default function Index() {
                 type="date"
                 value={formData.tentativeDeliveryDate}
                 onChange={handleChange}
-                className="bg-white/5 border-white/10"
               />
             </div>
 
