@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { User, Package, Hash, Calendar, CheckCircle } from "lucide-react";
+import { User, Package, Hash, Calendar, CheckCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
-const API_URL = "https://sales-analysis-api-soa1.onrender.com";
+const API_URL = "http://localhost:3001";
 
 export default function Index() {
   const [formData, setFormData] = useState({
     customer: "",
     product: "",
     quantity: "",
+    mobileNumber: "",
     tentativeDeliveryDate: "",
   });
   const [loading, setLoading] = useState(false);
@@ -36,7 +37,9 @@ export default function Index() {
           customer: formData.customer,
           product: formData.product,
           quantity: parseInt(formData.quantity),
+          mobileNumber: formData.mobileNumber,
           tentativeDeliveryDate: formData.tentativeDeliveryDate || undefined,
+          
         }),
       });
 
@@ -47,7 +50,7 @@ export default function Index() {
           title: "Success!",
           description: "Order created successfully",
         });
-        setFormData({ customer: "", product: "", quantity: "", tentativeDeliveryDate: "" });
+        setFormData({ customer: "", product: "", quantity: "", mobileNumber: "", tentativeDeliveryDate: "" });
       } else {
         toast({
           title: "Error",
@@ -125,6 +128,21 @@ export default function Index() {
             </div>
 
             <div className="space-y-2">
+              <Label htmlFor="mobileNumber" className="flex items-center gap-2">
+                <Phone className="w-4 h-4" />
+                Mobile Number
+              </Label>
+              <Input
+                id="mobileNumber"
+                name="mobileNumber"
+                type="tel"
+                value={formData.mobileNumber}
+                onChange={handleChange}
+                placeholder="Enter mobile number"
+              />
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="tentativeDeliveryDate" className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 Tentative Delivery Date
@@ -147,7 +165,7 @@ export default function Index() {
               ) : (
                 <>
                   <CheckCircle className="w-5 h-5" />
-                  Create Order
+                  Request Quota
                 </>
               )}
             </Button>
