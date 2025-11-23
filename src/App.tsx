@@ -8,6 +8,7 @@ import WatsonxChat from "./components/WatsonxChat";
 import Index from "./pages/Index";
 import Reports from "./pages/Reports";
 import NotFound from "./pages/NotFound";
+import Fulfillment from "./pages/Fulfillment";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/reports" element={<Reports />} />
+          <Route path="/fulfillment" element={<Fulfillment />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

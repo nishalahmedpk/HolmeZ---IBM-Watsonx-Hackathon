@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { TrendingUp, Users, Package, Truck } from "lucide-react";
+import { TrendingUp, Users, Package, Truck, DollarSign } from "lucide-react";
 import SummaryCard from "@/components/SummaryCard";
 import NoData from "@/components/NoData";
 import { Button } from "@/components/ui/button";
@@ -166,6 +166,12 @@ export default function Reports() {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <SummaryCard
+              title="Total Revenue"
+              value={`$${(reportData.summary.totalRevenue || 0).toLocaleString()}`}
+              icon={<DollarSign className="w-6 h-6" />}
+              color="#f59e0b"
+            />
+            <SummaryCard
               title="Total Orders"
               value={reportData.summary.totalOrders}
               icon={<Package className="w-6 h-6" />}
@@ -182,12 +188,6 @@ export default function Reports() {
               value={`${reportData.summary.deliveryRate.toFixed(1)}%`}
               icon={<Truck className="w-6 h-6" />}
               color="#10b981"
-            />
-            <SummaryCard
-              title="Top Product"
-              value={reportData.summary.topProduct}
-              icon={<Users className="w-6 h-6" />}
-              color="#8b5cf6"
             />
           </div>
 
@@ -215,9 +215,32 @@ export default function Reports() {
               </div>
             )}
 
+            {reportData.data.monthlyTrend && reportData.data.monthlyTrend.length > 0 && (
+              <div className="glass-card p-6 bg-white">
+                <h3 className="text-xl font-semibold text-foreground mb-4">Revenue Trend</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={reportData.data.monthlyTrend}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                    <XAxis dataKey="month" stroke="#94a3b8" />
+                    <YAxis stroke="#94a3b8" />
+                    <Tooltip
+                      contentStyle={{
+                        background: "rgba(15, 23, 42, 0.9)",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        borderRadius: "8px",
+                      }}
+                      formatter={(value: any) => [`$${value}`, "Revenue"]}
+                    />
+                    <Legend />
+                    <Line type="monotone" dataKey="revenue" stroke="#f59e0b" strokeWidth={2} name="Revenue" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            )}
+
             {reportData.data.topCustomers && reportData.data.topCustomers.length > 0 && (
               <div className="glass-card p-6 bg-white">
-                <h3 className="text-xl font-semibold text-foreground mb-4">Top Customers</h3>
+                <h3 className="text-xl font-semibold text-foreground mb-4">Top Customers by Quantity</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={reportData.data.topCustomers.slice(0, 10)} layout="vertical">
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
@@ -230,7 +253,29 @@ export default function Reports() {
                         borderRadius: "8px",
                       }}
                     />
-                    <Bar dataKey="quantity" fill="#8b5cf6" />
+                    <Bar dataKey="quantity" fill="#8b5cf6" name="Quantity" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            )}
+
+            {reportData.data.topCustomers && reportData.data.topCustomers.length > 0 && (
+              <div className="glass-card p-6 bg-white">
+                <h3 className="text-xl font-semibold text-foreground mb-4">Top Customers by Revenue</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={[...reportData.data.topCustomers].sort((a: any, b: any) => b.revenue - a.revenue).slice(0, 10)} layout="vertical">
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                    <XAxis type="number" stroke="#94a3b8" />
+                    <YAxis dataKey="name" type="category" stroke="#94a3b8" width={100} />
+                    <Tooltip
+                      contentStyle={{
+                        background: "rgba(15, 23, 42, 0.9)",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        borderRadius: "8px",
+                      }}
+                      formatter={(value: any) => [`$${value.toLocaleString()}`, "Revenue"]}
+                    />
+                    <Bar dataKey="revenue" fill="#f59e0b" name="Revenue" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -238,7 +283,7 @@ export default function Reports() {
 
             {reportData.data.topProducts && reportData.data.topProducts.length > 0 && (
               <div className="glass-card p-6 bg-white">
-                <h3 className="text-xl font-semibold text-foreground mb-4">Top Products</h3>
+                <h3 className="text-xl font-semibold text-foreground mb-4">Top Products by Quantity</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={reportData.data.topProducts.slice(0, 10)}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
@@ -251,7 +296,29 @@ export default function Reports() {
                         borderRadius: "8px",
                       }}
                     />
-                    <Bar dataKey="quantity" fill="#14b8a6" />
+                    <Bar dataKey="quantity" fill="#14b8a6" name="Quantity" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            )}
+
+            {reportData.data.topProducts && reportData.data.topProducts.length > 0 && (
+              <div className="glass-card p-6 bg-white">
+                <h3 className="text-xl font-semibold text-foreground mb-4">Top Products by Revenue</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={[...reportData.data.topProducts].sort((a: any, b: any) => b.revenue - a.revenue).slice(0, 10)}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                    <XAxis dataKey="name" stroke="#94a3b8" angle={-45} textAnchor="end" height={100} />
+                    <YAxis stroke="#94a3b8" />
+                    <Tooltip
+                      contentStyle={{
+                        background: "rgba(15, 23, 42, 0.9)",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        borderRadius: "8px",
+                      }}
+                      formatter={(value: any) => [`$${value.toLocaleString()}`, "Revenue"]}
+                    />
+                    <Bar dataKey="revenue" fill="#ec4899" name="Revenue" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

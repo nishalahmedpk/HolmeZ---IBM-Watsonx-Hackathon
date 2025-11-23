@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
-const API_URL = "http://localhost:3001";
+const API_URL = "https://sales-analysis-api-soa1.onrender.com";
 
 export default function Index() {
   const [formData, setFormData] = useState({
@@ -39,7 +39,7 @@ export default function Index() {
           quantity: parseInt(formData.quantity),
           mobileNumber: formData.mobileNumber,
           tentativeDeliveryDate: formData.tentativeDeliveryDate || undefined,
-          
+
         }),
       });
 
