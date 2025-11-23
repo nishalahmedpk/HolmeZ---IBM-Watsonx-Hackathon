@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 
-const API_URL = "https://e37066314ff4.ngrok-free.app";
+const API_URL = "https://sales-analysis-api-soa1.onrender.com";
 const COLORS = ["#10b981", "#f59e0b", "#3b82f6", "#8b5cf6", "#ec4899", "#14b8a6"];
 
 export default function Reports() {
@@ -52,7 +52,6 @@ export default function Reports() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify(body),
       });

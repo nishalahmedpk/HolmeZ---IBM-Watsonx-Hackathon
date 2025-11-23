@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
-const API_URL = "https://e37066314ff4.ngrok-free.app";
+const API_URL = "https://sales-analysis-api-soa1.onrender.com";
 
 export default function Index() {
   const [formData, setFormData] = useState({
@@ -31,7 +31,6 @@ export default function Index() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify({
           customer: formData.customer,
