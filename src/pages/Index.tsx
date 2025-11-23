@@ -3,9 +3,18 @@ import { User, Package, Hash, Calendar, CheckCircle, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 
 const API_URL = "https://sales-analysis-api-soa1.onrender.com";
+
+const PRODUCT_OPTIONS = [
+  { name: "Power transistors", price: 1000 },
+  { name: "Thyristors", price: 2000 },
+  { name: "Diodes", price: 3000 },
+  { name: "Motor controllers", price: 4000 },
+  { name: "Pressure sensors", price: 5000 },
+];
 
 export default function Index() {
   const [formData, setFormData] = useState({
@@ -100,14 +109,21 @@ export default function Index() {
                 <Package className="w-4 h-4" />
                 Product Name *
               </Label>
-              <Input
-                id="product"
-                name="product"
+              <Select
                 value={formData.product}
-                onChange={handleChange}
-                placeholder="Enter product name"
-                required
-              />
+                onValueChange={(value) => setFormData((prev) => ({ ...prev, product: value }))}
+              >
+                <SelectTrigger id="product">
+                  <SelectValue placeholder="Select a product" />
+                </SelectTrigger>
+                <SelectContent>
+                  {PRODUCT_OPTIONS.map((product) => (
+                    <SelectItem key={product.name} value={product.name}>
+                      {product.name} - ${product.price.toLocaleString()}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">

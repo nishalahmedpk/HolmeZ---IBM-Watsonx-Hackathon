@@ -20,7 +20,15 @@ declare global {
   }
 }
 
-export default function WatsonxChat() {
+interface WatsonxChatProps {
+  agentId?: string;
+  agentEnvironmentId?: string;
+}
+
+export default function WatsonxChat({
+  agentId = "69e6d33d-9326-442f-a870-bce64c94adeb",
+  agentEnvironmentId = "f997ce1f-ce83-4532-aff5-4e1c670fe810"
+}: WatsonxChatProps = {}) {
   useEffect(() => {
     // Clean up existing scripts
     const existingScripts = document.querySelectorAll('script[src*="wxoLoader.js"]');
@@ -35,8 +43,8 @@ export default function WatsonxChat() {
       deploymentPlatform: "ibmcloud",
       crn: "crn:v1:bluemix:public:watsonx-orchestrate:eu-gb:a/dc32db464f4449efb6b4531a37154977:4ef8abfc-f9ba-4be6-a2d3-df876913a154::",
       chatOptions: {
-        agentId: "6c591a59-c6b3-40a4-9201-94a05a35a6ae",
-        agentEnvironmentId: "f03c5b32-8323-46a3-ac47-dd88f8322db2"
+        agentId,
+        agentEnvironmentId
       }
     };
 
@@ -58,7 +66,7 @@ export default function WatsonxChat() {
       const scripts = document.querySelectorAll('script[src*="wxoLoader.js"]');
       scripts.forEach(script => script.remove());
     };
-  }, []);
+  }, [agentId, agentEnvironmentId]);
 
   return <div id="watsonx-chat-root" />;
 }
